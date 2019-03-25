@@ -1,7 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Description>EPiSerializer a helper tool to serialize EPiServer Content</Description>
+    <Authors>Emil Olsson</Authors>
+    <PackageId>EPiSerializer</PackageId>
+    <PackageTags>json,serialization</PackageTags>
+    <PackageProjectUrl>https://github.com/lillheaton/EPiSerializer</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/lillheaton/EPiSerializer/blob/master/License.md</PackageLicenseUrl>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>    
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>

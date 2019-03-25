@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EPiSerializer
+﻿namespace EPiSerializer
 {
     public interface IContentSerializer
     {
+        string Serialize(object target);
     }
 }
