@@ -18,7 +18,7 @@ namespace EPiSerializer.Converters
         private IEnumerable<object> GetContent(IEnumerable<ContentReference> references)
         {
             var repo = ServiceLocator.Current.GetInstance<IContentRepository>();
-            return references.Select(contentRef => repo.Get<IContent>(contentRef, LanguageSelector.AutoDetect()));            
+            return references.Select(contentRef => repo.Get<IContent>(contentRef, LanguageSelector.AutoDetect(true)));
         } 
     }
 }

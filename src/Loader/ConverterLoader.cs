@@ -1,5 +1,7 @@
-﻿using EOls.Serialization.Services.ConverterLocator;
+﻿using Castle.DynamicProxy;
+using EOls.Serialization.Services.ConverterLocator;
 using EOls.Serialization.Services.Reflection;
+using EPiServer;
 using System;
 using System.Linq;
 
@@ -28,6 +30,24 @@ namespace EPiSerializer.Loader
                     localAssemblyConverters
                     .Where(x => otherAssemblyConverters.Any(y => y.Equals(x)) == false)
                 ).ToArray();
+        }      
+
+        public override bool TryFindConverterFor(Type type, out IConverter converter)
+        {
+            bool typeIsEqual ((IConverter Converter, Type Target) tuple) 
+                => tuple.Target == type
+                || (typeof(IProxyTargetAccessor).IsAssignableFrom(type) ? tuple.Target == type.BaseType : false);
+            
+            bool exist = _converters.Any(typeIsEqual);
+
+            if (!exist)
+            {
+                converter = null;
+                return false;
+            }
+
+            converter = _converters.First(typeIsEqual).Converter;
+            return true;
         }
     }
 }
