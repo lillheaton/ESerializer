@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/qa0ut9qrbsa7k4wl?svg=true)](https://ci.appveyor.com/project/lillheaton/ESerializer)
+[![Build status](https://ci.appveyor.com/api/projects/status/gg99gx59nlb493hb?svg=true)](https://ci.appveyor.com/project/lillheaton/eserializer)
 [![NuGet](https://img.shields.io/nuget/v/ESerializer.svg)](https://www.nuget.org/packages/ESerializer/)
 
 # ESerializer
