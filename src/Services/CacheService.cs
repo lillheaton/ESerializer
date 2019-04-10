@@ -3,7 +3,7 @@ using EPiServer.Framework.Cache;
 using EPiServer.ServiceLocation;
 using System;
 
-namespace EPiSerializer.Services
+namespace ESerializer.Services
 {
     [ServiceConfiguration(typeof(ICacheService), Lifecycle = ServiceInstanceScope.Singleton)]
     public class CacheService : ICacheService

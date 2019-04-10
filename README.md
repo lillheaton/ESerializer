@@ -1,12 +1,12 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/qa0ut9qrbsa7k4wl?svg=true)](https://ci.appveyor.com/project/lillheaton/episerializer)
-[![NuGet](https://img.shields.io/nuget/v/EPiSerializer.svg)](https://www.nuget.org/packages/EPiSerializer/)
+[![Build status](https://ci.appveyor.com/api/projects/status/qa0ut9qrbsa7k4wl?svg=true)](https://ci.appveyor.com/project/lillheaton/ESerializer)
+[![NuGet](https://img.shields.io/nuget/v/ESerializer.svg)](https://www.nuget.org/packages/ESerializer/)
 
-# EPiSerializer
+# ESerializer
 A serializer specific for EPiServers content types and objects. This tool comes with a standard set of "converters" that allows you to serialize IContent objects or objects containing IContent.
 This tool builds on top of [EOls.Serialization](https://github.com/lillheaton/EOls.Serialization) which in turn builds on top of [Json.NET](https://www.newtonsoft.com/json/)
 
 ### Installation
-    PM> Install-Package EPiSerializer
+    PM> Install-Package ESerializer
 
 ### Usage
 Usage documentation would be referring to [EOls.Serialization](https://github.com/lillheaton/EOls.Serialization). 

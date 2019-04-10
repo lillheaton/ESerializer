@@ -1,7 +1,7 @@
 ﻿using EPiServer.SpecializedProperties;
 using System.Linq;
 
-namespace EPiSerializer.Converters
+namespace ESerializer.Converters
 {
     public class LinkItemCollectionPropertyConverter : IApiPropertyConverter<LinkItemCollection>
     {

@@ -5,7 +5,7 @@ using EPiServer;
 using System;
 using System.Linq;
 
-namespace EPiSerializer.Loader
+namespace ESerializer.Loader
 {
     public class ConverterLoader : ConverterLocatorService
     {

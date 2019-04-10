@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace EPiSerializer
+namespace ESerializer
 {
     public static class PropertyInfoEx
     {

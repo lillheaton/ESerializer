@@ -1,6 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using EOls.Serialization.Services.Cache;
-using EPiSerializer.Attributes;
+using ESerializer.Attributes;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using Newtonsoft.Json;
@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EPiSerializer
+namespace ESerializer
 {
     public class PropertyConverterContractResolver : EOls.Serialization.ContractResolver
     {

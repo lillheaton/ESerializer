@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace EPiSerializer.Test.SetupHelpers
+namespace ESerializer.Test.SetupHelpers
 {
     public class ContentTypeSetupHelper
     {        

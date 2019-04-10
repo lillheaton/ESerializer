@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPiSerializer", "src\EPiSerializer.csproj", "{EB301180-5E90-4A72-BBEE-4062BB70539A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESerializer", "src\ESerializer.csproj", "{EB301180-5E90-4A72-BBEE-4062BB70539A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiSerializer.Test", "test\EPiSerializer.Test.csproj", "{27026788-85F6-441E-BAC4-F427BAC557AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESerializer.Test", "test\ESerializer.Test.csproj", "{27026788-85F6-441E-BAC4-F427BAC557AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

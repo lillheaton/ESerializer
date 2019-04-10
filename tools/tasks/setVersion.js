@@ -11,8 +11,8 @@ export default function setVersion(version) {
     )
     .then(
       updateFile(
-        'Updating EPiSerializer.csproj version',
-        './EPiSerializer/EPiSerializer.csproj',
+        'Updating ESerializer.csproj version',
+        './ESerializer/ESerializer.csproj',
         data =>
           data.replace(
             /<VersionPrefix>(.*)<\/VersionPrefix>/,

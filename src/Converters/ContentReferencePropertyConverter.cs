@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 
-namespace EPiSerializer.Converters
+namespace ESerializer.Converters
 {
     public class ContentReferencePropertyConverter : IApiPropertyConverter<ContentReference>
     {

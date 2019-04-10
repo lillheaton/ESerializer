@@ -1,6 +1,6 @@
 ﻿using EOls.Serialization.Services.ConverterLocator;
 
-namespace EPiSerializer
+namespace ESerializer
 {
     public interface IApiPropertyConverter<T> : IObjectConverter<T>
     {

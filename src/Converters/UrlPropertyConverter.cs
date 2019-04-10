@@ -1,6 +1,6 @@
 ﻿using EPiServer;
 
-namespace EPiSerializer.Converters
+namespace ESerializer.Converters
 {
     public class UrlPropertyConverter : IApiPropertyConverter<Url>
     {

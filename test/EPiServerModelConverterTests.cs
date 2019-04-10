@@ -1,4 +1,4 @@
-﻿using EPiSerializer.Test.SetupHelpers;
+﻿using ESerializer.Test.SetupHelpers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace EPiSerializer.Test
+namespace ESerializer.Test
 {
     [TestClass]
     public class EPiServerModelConverterTests

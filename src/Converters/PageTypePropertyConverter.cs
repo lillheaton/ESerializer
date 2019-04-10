@@ -1,6 +1,6 @@
 ﻿using EPiServer.DataAbstraction;
 
-namespace EPiSerializer.Converters
+namespace ESerializer.Converters
 {
     public class PageTypePropertyConverter : IApiPropertyConverter<PageType>
     {

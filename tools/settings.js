@@ -15,13 +15,13 @@ const assemblyVersion = includeRevision
 const CI = process.env.CI && process.env.CI.toString().toLowerCase() === 'true'
 
 const artifactsPath = path.resolve('./artifacts')
-const solutionPath = path.resolve('./EPiSerializer.sln')
+const solutionPath = path.resolve('./ESerializer.sln')
 const projectSourcePath = path.resolve('./src')
 const cleanPaths = [`${projectSourcePath}/obj`, `${projectSourcePath}/bin`]
 
 const versionInfo = {
-  description: 'EPiSerializer a helper tool to serialize EPiServer Content',
-  productName: 'EPiSerializer',
+  description: 'ESerializer a helper tool to serialize EPiServer Content',
+  productName: 'ESerializer',
   copyright: 'Copyright 2019 Emil Olsson',
   version: assemblyVersion,
   fileVersion: assemblyVersion,

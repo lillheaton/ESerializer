@@ -4,7 +4,7 @@ using EPiServer.ServiceLocation;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EPiSerializer.Converters
+namespace ESerializer.Converters
 {
     public class ContentAreaPropertyConverter : IApiPropertyConverter<ContentArea>
     {

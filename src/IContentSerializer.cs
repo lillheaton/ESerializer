@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiSerializer
+namespace ESerializer
 {
     public interface IContentSerializer
     {

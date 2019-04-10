@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiSerializer.Attributes
+namespace ESerializer.Attributes
 {
     public class ApiPropertyAttribute : Attribute
     {

@@ -8,8 +8,8 @@
     <ProjectGuid>{27026788-85F6-441E-BAC4-F427BAC557AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EPiSerializer.Test</RootNamespace>
-    <AssemblyName>EPiSerializer.Test</AssemblyName>
+    <RootNamespace>ESerializer.Test</RootNamespace>
+    <AssemblyName>ESerializer.Test</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -142,9 +142,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\EPiSerializer.csproj">
+    <ProjectReference Include="..\src\ESerializer.csproj">
       <Project>{eb301180-5e90-4a72-bbee-4062bb70539a}</Project>
-      <Name>EPiSerializer</Name>
+      <Name>ESerializer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

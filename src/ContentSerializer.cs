@@ -1,13 +1,13 @@
 ﻿using EOls.Serialization.Services.Cache;
 using EOls.Serialization.Services.ConverterLocator;
-using EPiSerializer.Loader;
+using ESerializer.Loader;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace EPiSerializer
+namespace ESerializer
 {
     [ServiceConfiguration(typeof(IContentSerializer), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ContentSerializer : IContentSerializer
