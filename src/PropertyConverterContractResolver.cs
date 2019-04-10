@@ -1,8 +1,10 @@
 ﻿using Castle.DynamicProxy;
-using EOls.Serialization.Services.Cache;
-using ESerializer.Attributes;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using ESerializer.Attributes;
+using ESerializer.Loader;
+using JsonContractSimplifier.Services.Cache;
+using JsonContractSimplifier.Services.ConverterLocator;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -11,20 +13,28 @@ using System.Linq;
 
 namespace ESerializer
 {
-    public class PropertyConverterContractResolver : EOls.Serialization.ContractResolver
+    public class PropertyConverterContractResolver : JsonContractSimplifier.ContractResolver
     {
         private readonly IEnumerable<ContentType> _registredContentTypes;
 
-        public PropertyConverterContractResolver(IContentTypeRepository contentTypeRepository, ICacheService cacheService) : base(cacheService)
+        public PropertyConverterContractResolver(
+            IConverterLocatorService converterLocatorService,
+            IContentTypeRepository contentTypeRepository, 
+            ICacheService cacheService) 
+            : base(converterLocatorService, cacheService)
         {
             _registredContentTypes = contentTypeRepository
                 .List()
                 .Where(contentType => contentType.ModelType != null);
         }
-        public PropertyConverterContractResolver(IContentTypeRepository contentTypeRepository) : this(contentTypeRepository, null)
+
+        public PropertyConverterContractResolver(
+            IConverterLocatorService converterLocatorService, 
+            IContentTypeRepository contentTypeRepository) 
+            : this(converterLocatorService, contentTypeRepository, null)
         {
         }
-
+        
         private bool TryGetContentType(Type targetModelType, out ContentType contentType)
         {
             contentType = _registredContentTypes

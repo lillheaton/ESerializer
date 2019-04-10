@@ -1,7 +1,6 @@
 ﻿using Castle.DynamicProxy;
-using EOls.Serialization.Services.ConverterLocator;
-using EOls.Serialization.Services.Reflection;
-using EPiServer;
+using JsonContractSimplifier.Services.ConverterLocator;
+using JsonContractSimplifier.Services.Reflection;
 using System;
 using System.Linq;
 

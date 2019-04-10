@@ -1,4 +1,4 @@
-﻿using EOls.Serialization.Services.ConverterLocator;
+﻿using JsonContractSimplifier.Services.ConverterLocator;
 
 namespace ESerializer
 {

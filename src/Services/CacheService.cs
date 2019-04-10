@@ -1,4 +1,4 @@
-﻿using EOls.Serialization.Services.Cache;
+﻿using JsonContractSimplifier.Services.Cache;
 using EPiServer.Framework.Cache;
 using EPiServer.ServiceLocation;
 using System;

@@ -1,8 +1,7 @@
-﻿using EOls.Serialization.Services.Cache;
-using EOls.Serialization.Services.ConverterLocator;
-using ESerializer.Loader;
-using EPiServer.DataAbstraction;
+﻿using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
+using ESerializer.Loader;
+using JsonContractSimplifier.Services.Cache;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,26 +12,26 @@ namespace ESerializer
     public class ContentSerializer : IContentSerializer
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings;
-        private readonly ICacheService _cacheService;
-        private readonly IConverterLocatorService _converterLocatorService;
+        private readonly ICacheService _cacheService;        
         private readonly PropertyConverterContractResolver _propertyConverterContractResolver;
         private readonly List<Type> _extraOptInAttributeTypes;
 
         public ContentSerializer(ICacheService cacheService, IContentTypeRepository contentTypeRepository)
         {
-            _cacheService = cacheService;
-            _converterLocatorService = new ConverterLoader();
+            _cacheService = cacheService;            
             _extraOptInAttributeTypes = new List<Type>();
 
-            _propertyConverterContractResolver = new PropertyConverterContractResolver(contentTypeRepository, cacheService)
+            _propertyConverterContractResolver = new PropertyConverterContractResolver(
+                new ConverterLoader(), 
+                contentTypeRepository, 
+                cacheService)
             {
                 ShouldCache = cacheService != null
             };
 
             _jsonSerializerSettings = new JsonSerializerSettings
             {
-                ContractResolver = _propertyConverterContractResolver,
-                Converters = new[] { new EOls.Serialization.TargetsJsonConverter(_converterLocatorService) },
+                ContractResolver = _propertyConverterContractResolver,                
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
         }
