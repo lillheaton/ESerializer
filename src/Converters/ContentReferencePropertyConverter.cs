@@ -2,10 +2,12 @@
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
+using JsonContractSimplifier.Services.ConverterLocator;
 
 namespace ESerializer.Converters
 {
-    public class ContentReferencePropertyConverter : IApiPropertyConverter<ContentReference>
+    [ServiceConfiguration(typeof(IConverter), Lifecycle = ServiceInstanceScope.Singleton)]
+    public class ContentReferencePropertyConverter : IEPropertyConverter<ContentReference>
     {
         private readonly IContentRepository _contentRepository;
         private readonly IUrlResolver _urlResolver;
@@ -15,12 +17,7 @@ namespace ESerializer.Converters
             _contentRepository = contentRepository;
             _urlResolver = urlResolver;
         }
-
-        public ContentReferencePropertyConverter() : this(
-            ServiceLocator.Current.GetInstance<IContentRepository>(),
-            ServiceLocator.Current.GetInstance<IUrlResolver>())
-        { }
-
+        
         public object Convert(ContentReference target)
         {
             if (target == null) return null;

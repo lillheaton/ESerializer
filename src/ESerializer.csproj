@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JsonContractSimplifier" Version="0.5.0.2" />
+    <PackageReference Include="JsonContractSimplifier" Version="0.8.0" />
     <PackageReference Include="EPiServer.CMS.Core" Version="11.3.1" />
   </ItemGroup>
 

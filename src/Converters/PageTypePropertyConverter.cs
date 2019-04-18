@@ -1,8 +1,11 @@
 ﻿using EPiServer.DataAbstraction;
+using EPiServer.ServiceLocation;
+using JsonContractSimplifier.Services.ConverterLocator;
 
 namespace ESerializer.Converters
 {
-    public class PageTypePropertyConverter : IApiPropertyConverter<PageType>
+    [ServiceConfiguration(typeof(IConverter), Lifecycle = ServiceInstanceScope.Singleton)]
+    public class PageTypePropertyConverter : IEPropertyConverter<PageType>
     {
         public object Convert(PageType target)
         {

@@ -10,10 +10,12 @@ This tool builds on top of [JsonContractSimplifier](https://github.com/lillheato
 
 ### Usage
 Usage documentation would be referring to [JsonContractSimplifier](https://github.com/lillheaton/JsonContractSimplifier). 
-The key difference here is another interface to implement converters IApiPropertyConverter<> that implements IObjectConverter<> from [JsonContractSimplifier](https://github.com/lillheaton/JsonContractSimplifier).
+The key difference here is another interface to implement converters IEPropertyConverter<> that implements IObjectConverter<> from [JsonContractSimplifier](https://github.com/lillheaton/JsonContractSimplifier).
+This project utilizes EPiServer IoC/DI container to register and find all converters. So you need to register them on IConverter
 
 ```C#
-public class LinkItemCollectionPropertyConverter : IApiPropertyConverter<LinkItemCollection>
+[ServiceConfiguration(typeof(IConverter), Lifecycle = ServiceInstanceScope.Singleton)]
+public class LinkItemCollectionPropertyConverter : IEPropertyConverter<LinkItemCollection>
 {
     public object Convert(LinkItemCollection target)
     {
@@ -23,7 +25,5 @@ public class LinkItemCollectionPropertyConverter : IApiPropertyConverter<LinkIte
 ```
 
 ##### Hide specific properties
-You can either you the JsonIgnore attribute or ApiPropertyAttribute. 
+This project builds on top of Json.NET so you can utilize all already existing Json.NET attributes
 
-##### Setup a API
-The tool https://github.com/lillheaton/ESerializer is setting up a small API endpoint and controller to load and serialize content based on page ID.

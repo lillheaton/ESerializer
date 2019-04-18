@@ -2,7 +2,7 @@
 
 namespace ESerializer
 {
-    public interface IApiPropertyConverter<T> : IObjectConverter<T>
+    public interface IEPropertyConverter<T> : IObjectConverter<T>
     {
     }
 }

@@ -1,9 +1,12 @@
-﻿using EPiServer.SpecializedProperties;
+﻿using EPiServer.ServiceLocation;
+using EPiServer.SpecializedProperties;
+using JsonContractSimplifier.Services.ConverterLocator;
 using System.Linq;
 
 namespace ESerializer.Converters
 {
-    public class LinkItemCollectionPropertyConverter : IApiPropertyConverter<LinkItemCollection>
+    [ServiceConfiguration(typeof(IConverter), Lifecycle = ServiceInstanceScope.Singleton)]
+    public class LinkItemCollectionPropertyConverter : IEPropertyConverter<LinkItemCollection>
     {
         public object Convert(LinkItemCollection target)
         {

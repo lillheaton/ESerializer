@@ -1,7 +1,7 @@
 ﻿using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
-using ESerializer.Loader;
 using JsonContractSimplifier.Services.Cache;
+using JsonContractSimplifier.Services.ConverterLocator;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,25 +11,29 @@ namespace ESerializer
     [ServiceConfiguration(typeof(IContentSerializer), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ContentSerializer : IContentSerializer
     {
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
         private readonly ICacheService _cacheService;        
         private readonly PropertyConverterContractResolver _propertyConverterContractResolver;
-        private readonly List<Type> _extraOptInAttributeTypes;
+        private readonly List<Type> _extraOptInAttributeTypes;        
 
-        public ContentSerializer(ICacheService cacheService, IContentTypeRepository contentTypeRepository)
+        public JsonSerializerSettings JsonSerializerSettings { get; private set; }
+
+        public ContentSerializer(
+            IConverterLocatorService converterLocatorService, 
+            ICacheService cacheService, 
+            IContentTypeRepository contentTypeRepository)
         {
             _cacheService = cacheService;            
             _extraOptInAttributeTypes = new List<Type>();
 
             _propertyConverterContractResolver = new PropertyConverterContractResolver(
-                new ConverterLoader(), 
+                converterLocatorService, 
                 contentTypeRepository, 
                 cacheService)
             {
                 ShouldCache = cacheService != null
             };
 
-            _jsonSerializerSettings = new JsonSerializerSettings
+            JsonSerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = _propertyConverterContractResolver,                
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -49,7 +53,7 @@ namespace ESerializer
 
         public string Serialize(object target)
         {
-            return JsonConvert.SerializeObject(target, _jsonSerializerSettings);
+            return JsonConvert.SerializeObject(target, JsonSerializerSettings);
         }
 
 

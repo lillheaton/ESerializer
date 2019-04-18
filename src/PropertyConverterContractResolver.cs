@@ -1,8 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
-using ESerializer.Attributes;
-using ESerializer.Loader;
 using JsonContractSimplifier.Services.Cache;
 using JsonContractSimplifier.Services.ConverterLocator;
 using Newtonsoft.Json;
@@ -10,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ESerializer
 {
@@ -46,19 +45,34 @@ namespace ESerializer
             return contentType != null;
         }
 
+        protected override JsonContract CreateContract(Type objectType)
+        {
+            if (typeof(IProxyTargetAccessor).IsAssignableFrom(objectType))
+            {
+                return base.CreateContract(objectType.BaseType);
+            }
+            return base.CreateContract(objectType);
+        }
+
         private IEnumerable<JsonProperty> CreateJsonProperties(Type type, MemberSerialization memberSerialization)
         {
-            if (!TryGetContentType(type, out ContentType contentType))
+            if(memberSerialization == MemberSerialization.OptIn)
             {
                 return base.CreateProperties(type, memberSerialization);
             }
 
-            return contentType
-                .PropertyDefinitions
-                .Where(propDefinition => propDefinition.ExistsOnModel)
-                .Select(propDefinition => contentType.ModelType.GetProperty(propDefinition.Name))
-                .Where(x => x.HasAttributeWithConditionOrTrue<ApiPropertyAttribute>(attr => attr.Hide == false))
-                .Select(x => base.CreateProperty(x, memberSerialization));
+            if (!TryGetContentType(type, out ContentType contentType))
+            {
+                return base.CreateProperties(type, memberSerialization);
+            }
+            
+            return type
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(prop => 
+                    contentType.PropertyDefinitions.Any(x => x.Name == prop.Name && x.ExistsOnModel) || 
+                    prop.DeclaringType.Assembly == type.Assembly
+                )                
+                .Select(x => base.CreateProperty(x, memberSerialization));            
         }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
