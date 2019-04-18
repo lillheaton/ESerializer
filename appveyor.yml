@@ -36,5 +36,4 @@ deploy:
   skip_symbols: false
   symbol_server:
   on:
-    branch:
-      APPVEYOR_REPO_TAG: true
+    APPVEYOR_REPO_TAG: true
