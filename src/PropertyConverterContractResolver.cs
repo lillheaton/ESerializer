@@ -63,6 +63,17 @@ namespace ESerializer
 
             if (!TryGetContentType(type, out ContentType contentType))
             {
+                if (typeof(IContentData).IsAssignableFrom(type))
+                {
+                    var contentDataPropertyNames = typeof(ContentData).GetProperties().Select(x => x.Name);
+
+                    // If type does not have contentType and is ContentData, filter IContentData properties
+                    return type
+                        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                        .Where(prop => !contentDataPropertyNames.Contains(prop.Name))
+                        .Select(x => base.CreateProperty(x, memberSerialization));
+                }
+                
                 return base.CreateProperties(type, memberSerialization);
             }
             
@@ -72,7 +83,7 @@ namespace ESerializer
                     contentType.PropertyDefinitions.Any(x => x.Name == prop.Name && x.ExistsOnModel) || 
                     prop.DeclaringType.Assembly == type.Assembly
                 )                
-                .Select(x => base.CreateProperty(x, memberSerialization));            
+                .Select(x => base.CreateProperty(x, memberSerialization));
         }
 
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -82,9 +93,9 @@ namespace ESerializer
                 case Type proxyType when typeof(IProxyTargetAccessor).IsAssignableFrom(type):
                     return CreateJsonProperties(proxyType.BaseType, memberSerialization).ToList();
 
-                case Type epiType when typeof(IContent).IsAssignableFrom(type):
+                case Type epiType when typeof(IContentData).IsAssignableFrom(type):
                     return CreateJsonProperties(epiType, memberSerialization).ToList();
-
+                    
                 default:
                     return base.CreateProperties(type, memberSerialization);
             }
