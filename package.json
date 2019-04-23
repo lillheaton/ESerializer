@@ -1,6 +1,6 @@
 {
   "name": "ESerializer",
-  "version": "0.7.1",
+  "version": "0.7.0",
   "main": "index.js",
   "repository": "git@github.com:lillheaton/ESerializer.git",
   "author": "Emil Olsson",
