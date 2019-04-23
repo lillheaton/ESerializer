@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace ESerializer
 {
@@ -7,6 +8,7 @@ namespace ESerializer
     {
         JsonSerializerSettings JsonSerializerSettings { get; }
         string Serialize(object target);
-        void AddExtraOptInAttribute<TAttribute>() where TAttribute : Attribute;        
+        Dictionary<string, object> Convert(object target);
+        void AddExtraOptInAttribute<TAttribute>() where TAttribute : Attribute;    
     }
 }

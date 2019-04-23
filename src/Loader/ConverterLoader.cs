@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using EPiServer.ServiceLocation;
+using ESerializer.Utils;
 using JsonContractSimplifier;
 using JsonContractSimplifier.Services.ConverterLocator;
 using System;
@@ -10,6 +11,8 @@ namespace ESerializer.Loader
     [ServiceConfiguration(typeof(IConverterLocatorService), Lifecycle = ServiceInstanceScope.Singleton)]
     public class ConverterLoader : IConverterLocatorService
     {
+        private readonly DeriveTypeCompare _deriveTypeComparer = new DeriveTypeCompare();
+
         private (IConverter Converter, Type Target)[] _converters;       
         private (IConverter Converter, Type Target)[] Converters { get
             {
@@ -63,19 +66,22 @@ namespace ESerializer.Loader
         
         public virtual bool TryFindConverterFor(Type type, out IConverter converter)
         {
-            bool typeIsEqual ((IConverter Converter, Type Target) tuple) 
-                => tuple.Target == type
-                || (typeof(IProxyTargetAccessor).IsAssignableFrom(type) ? tuple.Target == type.BaseType : false);
+            Type compareType = typeof(IProxyTargetAccessor).IsAssignableFrom(type) ? type.BaseType : type;
             
-            bool exist = Converters.Any(typeIsEqual);
+            bool typeIsEqual((IConverter Converter, Type Target) tuple)
+                => tuple.Target == compareType || compareType.IsSubclassOf(tuple.Target);
+            
+            var converters = Converters.Where(typeIsEqual).OrderBy(x => x.Target, _deriveTypeComparer);
 
+            bool exist = converters.Any();
+            
             if (!exist)
             {
                 converter = null;
                 return false;
             }
 
-            converter = Converters.First(typeIsEqual).Converter;
+            converter = converters.First().Converter;
             return true;
         }        
     }

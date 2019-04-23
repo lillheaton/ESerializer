@@ -1,6 +1,9 @@
 ﻿using Castle.DynamicProxy;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
+using ESerializer.Attributes;
+using ESerializer.Factory;
+using ESerializer.Loader;
 using JsonContractSimplifier.Services.Cache;
 using JsonContractSimplifier.Services.ConverterLocator;
 using Newtonsoft.Json;
@@ -14,7 +17,7 @@ namespace ESerializer
 {
     public class PropertyConverterContractResolver : JsonContractSimplifier.ContractResolver
     {
-        private readonly IEnumerable<ContentType> _registredContentTypes;
+        private readonly ContentTypeLoader _contentTypeLoader;
 
         public PropertyConverterContractResolver(
             IConverterLocatorService converterLocatorService,
@@ -22,9 +25,7 @@ namespace ESerializer
             ICacheService cacheService) 
             : base(converterLocatorService, cacheService)
         {
-            _registredContentTypes = contentTypeRepository
-                .List()
-                .Where(contentType => contentType.ModelType != null);
+            _contentTypeLoader = new ContentTypeLoader(contentTypeRepository);            
         }
 
         public PropertyConverterContractResolver(
@@ -34,17 +35,6 @@ namespace ESerializer
         {
         }
         
-        private bool TryGetContentType(Type targetModelType, out ContentType contentType)
-        {
-            contentType = _registredContentTypes
-                .FirstOrDefault(x =>
-                    x.ModelType == targetModelType ||
-                    targetModelType.IsAssignableFrom(x.ModelType)
-                );
-
-            return contentType != null;
-        }
-
         protected override JsonContract CreateContract(Type objectType)
         {
             if (typeof(IProxyTargetAccessor).IsAssignableFrom(objectType))
@@ -54,35 +44,49 @@ namespace ESerializer
             return base.CreateContract(objectType);
         }
 
+        protected override bool ShouldIgnore(JsonProperty jsonProperty, MemberInfo member, MemberSerialization memberSerialization)
+        {
+            var attributes = jsonProperty
+                    .AttributeProvider
+                    .GetAttributes(false);
+
+            if (attributes.Any(attr => attr.GetType() == typeof(ESerializeIgnoreAttribute)))
+            {
+                return true;
+            }
+
+            return base.ShouldIgnore(jsonProperty, member, memberSerialization);
+        }
+
         private IEnumerable<JsonProperty> CreateJsonProperties(Type type, MemberSerialization memberSerialization)
         {
             if(memberSerialization == MemberSerialization.OptIn)
             {
                 return base.CreateProperties(type, memberSerialization);
             }
-
-            if (!TryGetContentType(type, out ContentType contentType))
+            
+            if (!_contentTypeLoader.TryGetContentType(type, out ContentType contentType))
             {
                 if (typeof(IContentData).IsAssignableFrom(type))
                 {
-                    var contentDataPropertyNames = typeof(ContentData).GetProperties().Select(x => x.Name);
-
-                    // If type does not have contentType and is ContentData, filter IContentData properties
-                    return type
-                        .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                        .Where(prop => !contentDataPropertyNames.Contains(prop.Name))
-                        .Select(x => base.CreateProperty(x, memberSerialization));
+                    return TypeUtils
+                        .GetProperties(type, _contentTypeLoader)
+                        .Where(x => 
+                            x.HasAttribute<JsonIgnoreAttribute>() == false &&
+                            x.HasAttribute<ESerializeIgnoreAttribute>() == false
+                        ) 
+                        .Select(x => base.CreateProperty(x, memberSerialization));                    
                 }
                 
                 return base.CreateProperties(type, memberSerialization);
             }
             
-            return type
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(prop => 
-                    contentType.PropertyDefinitions.Any(x => x.Name == prop.Name && x.ExistsOnModel) || 
-                    prop.DeclaringType.Assembly == type.Assembly
-                )                
+            return TypeUtils
+                .GetProperties(type, _contentTypeLoader)
+                .Where(x => 
+                    x.HasAttribute<JsonIgnoreAttribute>() == false &&
+                    x.HasAttribute<ESerializeIgnoreAttribute>() == false
+                )
                 .Select(x => base.CreateProperty(x, memberSerialization));
         }
 

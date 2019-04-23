@@ -24,6 +24,18 @@ public class LinkItemCollectionPropertyConverter : IEPropertyConverter<LinkItemC
 }
 ```
 
-##### Hide specific properties
-This project builds on top of Json.NET so you can utilize all already existing Json.NET attributes
+#### Serialize EPiServer content
+When serializeing a object - the tool utilizes IContentTypeRepository to find a matching ContentType registered by EPiServer.
+It then filters all properties that [exist on model](https://world.episerver.com/documentation/Class-library/?documentId=cms/11/90AE99FD). If there is properties that are defined but not registered by EPiServer you can still add these by decorate the property with ESerializePropertyAttribute
 
+```C#
+public class StartPage
+{
+    [ESerializeProperty]
+    public string MyProperty => "foobar"
+}
+```
+
+##### Hide specific properties
+This project builds on top of Json.NET so you can utilize all already existing Json.NET attributes.
+You can also use ESerializeIgnoreAttribute to hide properties.

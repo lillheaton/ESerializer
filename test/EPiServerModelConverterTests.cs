@@ -1,19 +1,19 @@
-﻿using ESerializer.Test.SetupHelpers;
-using EPiServer;
+﻿using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.ServiceLocation;
+using ESerializer.Attributes;
+using ESerializer.Converters;
+using ESerializer.Test.SetupHelpers;
+using JsonContractSimplifier.Services.ConverterLocator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using ESerializer.Converters;
-using JsonContractSimplifier.Services.ConverterLocator;
-using System;
-using ESerializer.Loader;
 
 namespace ESerializer.Test
 {
@@ -121,6 +121,7 @@ namespace ESerializer.Test
             public string Bar { get; set; }
             public ContentArea ContentArea { get; set; }
 
+            [ESerializeProperty]
             public string NotPartOfContentType => "dummyData"; // A property that is not defined on ContentType nor a episerver property
         }
 
@@ -191,7 +192,11 @@ namespace ESerializer.Test
             IConverter converter = contentAreaConverter;
 
             _converterLocatorServiceMock
-                .Setup(x => x.TryFindConverterFor(It.Is<Type>(type => type.BaseType == typeof(ContentArea)), out converter))
+                .Setup(x => x.TryFindConverterFor(
+                    It.Is<Type>(
+                        type => type.BaseType == typeof(ContentArea) || 
+                        type == typeof(ContentArea)), out converter)
+                )
                 .Returns(true);
 
             _converterLocatorServiceMock

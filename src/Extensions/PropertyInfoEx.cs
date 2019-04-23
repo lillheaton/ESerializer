@@ -23,6 +23,6 @@ namespace ESerializer
                 return true;
 
             return filter(attribute);
-        }
+        }        
     }
 }
