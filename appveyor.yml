@@ -32,7 +32,7 @@ deploy:
 - provider: NuGet
   server:
   api_key:
-    secure: 2IahWGz4z1Hjob2zdT7O++4yoa8PpsgJWiJozzXWgfzMUAhwDp1XXHQ+R46M10Bq
+    secure: oy2hh3pyzhoz6dpb5azayyx6jgtk65derho7d6ztovb344
   skip_symbols: false
   symbol_server:
   on:
